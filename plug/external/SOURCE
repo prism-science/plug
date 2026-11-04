@@ -1,0 +1,83 @@
+min_vertex_k_cut.py is taken unmodified from Lo-Hi:
+
+  https://github.com/SteshinSS/lohi_neurips2023
+  commit  1686b016e360537ce4eb9e5996de6254be64fb3f
+  path    code/min_vertex_k_cut.py
+  sha256  c9410bd8f02de2a558e918036e28fa6add9ca0b6087438f1c207cd5237cda9fc
+  licence MIT, see ../../licenses/LOHI-MIT-LICENSE
+
+Simon Steshin, "Lo-Hi: Practical ML Drug Discovery Benchmark", NeurIPS 2023.
+https://arxiv.org/abs/2310.06399
+
+It is vendored rather than cloned at run time because that repo ships no
+setup.py and is not installable, and because a split that is reproducible has
+to depend on a fixed file rather than on whatever a remote branch holds today.
+
+----------------------------------------------------------------------------
+
+datasail_cluster_1d.py is DataSAIL's cluster-based cold split (their "C1"):
+
+  https://github.com/kalininalab/DataSAIL
+  commit  c31695688a9fd59c2fd17314fe27e36ddc701c3a
+  path    datasail/solver/cluster_1d.py
+  sha256  0802b3774fbebdfb70fd26cafff7470c7a512876ff3bc9bb4e1be97d270cfb07
+  licence MIT, see ../../licenses/DATASAIL-MIT-LICENSE
+
+Roman Joeres, David B. Blumenthal, Olga V. Kalinina, "DataSAIL: Data Splitting
+Against Information Leakage". https://doi.org/10.1101/2023.11.15.566305
+
+Four edits, all recorded here and nowhere else:
+
+  1. the import of solve / compute_limits / stratification_constraints now
+     points at datasail_support.py beside it. Importing the installed datasail
+     would pull in its whole clustering stack (grakel, h5py, sklearn, cvxopt,
+     matplotlib) to reach three functions, and its solve() sets a time limit
+     and fourteen threads, which rules.md's "one shot" forbids.
+
+  2. the objective is summed over a `pairs` argument -- the cluster pairs that
+     have a similarity -- instead of over all of them. Every term left out is
+     multiplied by a similarity of zero, so the objective is the same number;
+     built over all pairs it would be 1.18 million cvxpy atoms where 1,931
+     matter.
+
+  3. the loss is built as one cvxpy atom over all the pairs at once rather than
+     one atom per pair. cvxpy warns about exactly this ("Objective contains too
+     many subexpressions. Consider vectorizing"), and with 5,239 pairs its
+     canonicalisation ran twelve minutes without finishing, for a model SCIP
+     then solves in seconds. max over the splits of x[s,e1] - x[s,e2] is 1 when
+     a pair is separated and 0 when it is not, term for term the same as the
+     loop.
+
+  4. an optional `floors` argument: (weights, one floor per split) pairs, each
+     added as constraint (17) again over a second weight vector. C1 takes ONE
+     weight vector, so a benchmark weighted by its proteins had no way to keep
+     rows in test as well -- fireprot's test set came out at 9 proteins and 72
+     rows, too few to score. split.py passes the rows as the second vector with
+     a floor on every split (train 60%, val and test 5%). Left out, as it is for
+     every benchmark weighted by rows, the model is exactly theirs.
+
+The model itself -- one binary per (split, cluster), every cluster in exactly
+one split, a weight floor per split, and the weighted cross-split similarity as
+the loss -- is otherwise untouched. That is the method.
+
+----------------------------------------------------------------------------
+
+DataSAIL's double-cold split (their "C2") is NOT used and not vendored:
+
+  https://github.com/kalininalab/DataSAIL
+  commit  c31695688a9fd59c2fd17314fe27e36ddc701c3a
+  path    datasail/solver/cluster_2d.py
+  sha256  506a6316390d7a3b97dddd0d8f1a0db732d1256fa99122a5e157a0f1536b2950
+
+It was run on bindingdb and lp-pdbbind so their molecules would be split by the
+same model as their proteins, and it cannot hold the band there: it assigns the
+two axes independently at 58.6/20.7/20.7, and ONE molecule cluster carries 83.8%
+of bindingdb's row weight (lp-pdbbind 68.5%, and its protein axis 59.4%, already
+past the 58.6% train target). A cluster that big lands whole in one part, so
+validation and test cannot both reach their floors at any epsilon or cluster
+count -- bindingdb came out 99.4/0.2/0.4 and lp-pdbbind 93.2/3.6/3.1. DataSAIL's
+own PDBBind example runs on the core set, 182 entities, where no such blob
+exists, and their paper says only that assigning every interaction "cannot be
+guaranteed", not that the survivors land on the asked-for ratios. Those molecules
+follow their rows instead and the chemistry rule is paid for in dropped rows, in
+split.py.

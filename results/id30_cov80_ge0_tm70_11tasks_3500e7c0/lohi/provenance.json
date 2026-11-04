@@ -1,0 +1,336 @@
+{
+  "balance_on_proteins": true,
+  "cost": {
+    "peak_memory_mb": 4448.8,
+    "platform": "linux x86_64",
+    "python": "3.11.2",
+    "seconds": {
+      "graph": 110.9,
+      "lohi": 299.7,
+      "write": 29.7
+    },
+    "solver": "HIGHS"
+  },
+  "datasail_epsilon": 0.05,
+  "datasets": [
+    "allobench",
+    "atlas",
+    "bindingdb",
+    "cafa5",
+    "dms",
+    "fireprot",
+    "lp-pdbbind",
+    "megascale",
+    "passerrank",
+    "ppi",
+    "shs27k"
+  ],
+  "files": {
+    "nodes/molecules.csv.gz": "18a1a4eaa0e9dcd0",
+    "nodes/proteins.csv.gz": "b1e2bf98a0760bb3",
+    "splits/allobench.csv.gz": "2d549c19b148f136",
+    "splits/atlas.csv.gz": "816b82dab5896067",
+    "splits/bindingdb.csv.gz": "35bf2623c368df15",
+    "splits/cafa5.csv.gz": "3a7a0f2eee981552",
+    "splits/dms.csv.gz": "253eb41c4560e182",
+    "splits/fireprot.csv.gz": "1763dce572963881",
+    "splits/lp-pdbbind.csv.gz": "afc4811cd760f402",
+    "splits/megascale.csv.gz": "903d743c5639b918",
+    "splits/passerrank.csv.gz": "980614bb5a9d884c",
+    "splits/ppi.csv.gz": "90dea9591b7978e1",
+    "splits/shs27k.csv.gz": "1bfbec45c269bfcd"
+  },
+  "frac": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "graph": {
+    "components": 7318,
+    "edges": {
+      "sequence": 1294014,
+      "structure": 3032640
+    },
+    "label_classes": 12,
+    "label_classes_too_concentrated_to_band": 0,
+    "molecule_edges": 677362,
+    "molecules": 56387,
+    "proteins": 36816,
+    "rows": {
+      "allobench": 2257,
+      "atlas": 1938,
+      "bindingdb": 76866,
+      "cafa5": 8630,
+      "dms": 2465767,
+      "fireprot": 3404,
+      "lp-pdbbind": 19443,
+      "megascale": 271231,
+      "passerrank": 1885,
+      "ppi": 274500,
+      "shs27k": 7624
+    },
+    "unretainable_rows": {}
+  },
+  "rounds": 2,
+  "row_floors": {
+    "test": 0.05,
+    "train": 0.6,
+    "val": 0.05
+  },
+  "rows": {
+    "allobench": {
+      "dropped:excluded_protein": 1308,
+      "test": 67,
+      "train": 745,
+      "val": 137
+    },
+    "atlas": {
+      "dropped:excluded_protein": 449,
+      "test": 143,
+      "train": 1188,
+      "val": 158
+    },
+    "bindingdb": {
+      "dropped:excluded_ligand": 5435,
+      "dropped:excluded_protein": 34331,
+      "dropped:ligand_disagrees": 2725,
+      "test": 2760,
+      "train": 28703,
+      "val": 2912
+    },
+    "cafa5": {
+      "dropped:excluded_protein": 2033,
+      "test": 713,
+      "train": 5058,
+      "val": 826
+    },
+    "dms": {
+      "dropped:excluded_protein": 321678,
+      "test": 107306,
+      "train": 1929545,
+      "val": 107238
+    },
+    "fireprot": {
+      "dropped:excluded_protein": 774,
+      "test": 168,
+      "train": 1891,
+      "val": 571
+    },
+    "lp-pdbbind": {
+      "dropped:excluded_ligand": 2073,
+      "dropped:excluded_protein": 11119,
+      "dropped:ligand_disagrees": 808,
+      "test": 490,
+      "train": 4525,
+      "val": 428
+    },
+    "megascale": {
+      "dropped:excluded_protein": 100793,
+      "test": 15688,
+      "train": 139641,
+      "val": 15109
+    },
+    "passerrank": {
+      "dropped:excluded_protein": 1005,
+      "test": 55,
+      "train": 693,
+      "val": 132
+    },
+    "ppi": {
+      "dropped:excluded_protein": 83110,
+      "dropped:proteins_disagree": 103755,
+      "test": 6374,
+      "train": 72846,
+      "val": 8415
+    },
+    "shs27k": {
+      "dropped:excluded_protein": 3600,
+      "dropped:proteins_disagree": 2137,
+      "test": 139,
+      "train": 1579,
+      "val": 169
+    }
+  },
+  "searches": {
+    "ligands": {
+      "bytes": 96686199,
+      "sha256": "e1764f7c81ce7b8f",
+      "table": "pooled_ligands_tan50_ge30_2tasks_4c736cb3.pkl"
+    },
+    "sequence_half": {
+      "bytes": 162551935,
+      "sha256": "bcfaa5e47eb3cb47",
+      "table": "pooled_seq_id30_cov80_ge0_11tasks_c16223b6.pkl"
+    },
+    "structure": {
+      "bytes": 469969942,
+      "sha256": "dd54205d227f9084",
+      "table": "foldseek_22245_dd309fc938fad0d1_ge40.tsv.gz"
+    }
+  },
+  "seed": 0,
+  "solve": {
+    "by_part": {
+      "excluded": 12731,
+      "test": 3814,
+      "train": 15991,
+      "val": 4280
+    },
+    "clusters": 1537,
+    "coarsen_rounds": 2,
+    "components": 7318,
+    "constraints": 13282,
+    "floors": {
+      "allobench": [
+        0.6,
+        0.05,
+        0.05
+      ],
+      "atlas": [
+        0.6,
+        0.05,
+        0.05
+      ],
+      "cafa5": [
+        0.6,
+        0.05,
+        0.05
+      ],
+      "dms": [
+        0.6,
+        0.05,
+        0.05
+      ],
+      "fireprot": [
+        0.6,
+        0.05,
+        0.05
+      ],
+      "megascale": [
+        0.6,
+        0.05,
+        0.05
+      ],
+      "passerrank": [
+        0.6,
+        0.05,
+        0.05
+      ]
+    },
+    "gap": 0.0,
+    "largest_component": 24609,
+    "objective": 1534966.5,
+    "seconds": 262.6,
+    "status": "OPTIMAL",
+    "strata": 19,
+    "strata_tolerance": {
+      "allobench/#proteins": 0.035,
+      "atlas/#proteins": 0.035,
+      "cafa5/#proteins": 0.035,
+      "dms/#proteins": 0.035,
+      "dms/assay=Activity": 0.15,
+      "dms/assay=Binding": 0.15,
+      "dms/assay=Expression": 0.15,
+      "dms/assay=OrganismalFitness": 0.15,
+      "dms/assay=Stability": 0.15,
+      "fireprot/#proteins": 0.035,
+      "megascale/#proteins": 0.035,
+      "passerrank/#proteins": 0.035,
+      "shs27k/types=activation": 0.15,
+      "shs27k/types=binding": 0.15,
+      "shs27k/types=catalysis": 0.15,
+      "shs27k/types=expression": 0.15,
+      "shs27k/types=inhibition": 0.15,
+      "shs27k/types=ptmod": 0.15,
+      "shs27k/types=reaction": 0.15
+    },
+    "targets": {
+      "allobench": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "atlas": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "bindingdb": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "cafa5": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "dms": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "fireprot": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "lp-pdbbind": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "megascale": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "passerrank": [
+        0.8,
+        0.1,
+        0.1
+      ],
+      "ppi": [
+        0.585786437626905,
+        0.20710678118654752,
+        0.20710678118654752
+      ],
+      "shs27k": [
+        0.585786437626905,
+        0.20710678118654752,
+        0.20710678118654752
+      ]
+    },
+    "tolerance": 0.035,
+    "variables": 4611
+  },
+  "solve_tolerance": 0.035,
+  "strata_tolerance": 0.15,
+  "strategy": "lohi",
+  "stratified": true,
+  "structure_coverage": {
+    "allobench": 1.0,
+    "atlas": 1.0,
+    "fireprot": 1.0,
+    "lp-pdbbind": 1.0,
+    "passerrank": 1.0
+  },
+  "structure_views": [
+    "allobench",
+    "atlas",
+    "fireprot",
+    "lp-pdbbind",
+    "passerrank"
+  ],
+  "tag": "id30_cov80_ge0_tm70_11tasks_3500e7c0",
+  "thresholds": {
+    "cov_modes": "1 union 2",
+    "coverage": 0.8,
+    "fingerprint": "ecfp4 (morgan r=2, 2048 bits, no stereochemistry)",
+    "min_id": 0.3,
+    "sensitivity": "7.5",
+    "split_tm": 0.7,
+    "tanimoto": 0.5
+  },
+  "tolerance": 0.05
+}

@@ -1,0 +1,12 @@
+.venv/
+work/
+# the datasets are downloaded, not shipped: only the scripts that fetch them are tracked
+data/*
+!data/download_*.sh
+__pycache__/
+*.pyc
+.pytest_cache/
+out/
+.DS_Store
+.actlignore
+

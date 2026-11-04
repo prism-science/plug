@@ -1,0 +1,342 @@
+{
+  "balance_on_proteins": true,
+  "cost": {
+    "peak_memory_mb": 3840.1,
+    "platform": "linux x86_64",
+    "python": "3.11.2",
+    "seconds": {
+      "datasail": 363.6,
+      "graph": 109.6,
+      "write": 29.8
+    },
+    "solver": "SCIP"
+  },
+  "datasail_epsilon": 0.05,
+  "datasets": [
+    "allobench",
+    "atlas",
+    "bindingdb",
+    "cafa5",
+    "dms",
+    "fireprot",
+    "lp-pdbbind",
+    "megascale",
+    "passerrank",
+    "ppi",
+    "shs27k"
+  ],
+  "files": {
+    "nodes/molecules.csv.gz": "d4820bec143ccf00",
+    "nodes/proteins.csv.gz": "4c8be6fcb4306ce2",
+    "splits/allobench.csv.gz": "3792b7daa73b6d52",
+    "splits/atlas.csv.gz": "8a9a39d5b4cb1b80",
+    "splits/bindingdb.csv.gz": "100f831929a087da",
+    "splits/cafa5.csv.gz": "bd17ac9f559b31a7",
+    "splits/dms.csv.gz": "b230d7a50c4a3fef",
+    "splits/fireprot.csv.gz": "3bd717ff4c798577",
+    "splits/lp-pdbbind.csv.gz": "c8cc2cb04fb544b2",
+    "splits/megascale.csv.gz": "fd75b52c3cbe70c3",
+    "splits/passerrank.csv.gz": "69b910b24662333e",
+    "splits/ppi.csv.gz": "c6a1a08a4e755c43",
+    "splits/shs27k.csv.gz": "a6ec2dc049884384"
+  },
+  "frac": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "graph": {
+    "components": 7318,
+    "edges": {
+      "sequence": 1294014,
+      "structure": 3032640
+    },
+    "label_classes": 12,
+    "label_classes_too_concentrated_to_band": 0,
+    "molecule_edges": 677362,
+    "molecules": 56387,
+    "proteins": 36816,
+    "rows": {
+      "allobench": 2257,
+      "atlas": 1938,
+      "bindingdb": 76866,
+      "cafa5": 8630,
+      "dms": 2465767,
+      "fireprot": 3404,
+      "lp-pdbbind": 19443,
+      "megascale": 271231,
+      "passerrank": 1885,
+      "ppi": 274500,
+      "shs27k": 7624
+    },
+    "unretainable_rows": {}
+  },
+  "rounds": 2,
+  "row_floors": {
+    "test": 0.05,
+    "train": 0.6,
+    "val": 0.05
+  },
+  "rows": {
+    "allobench": {
+      "dropped:proteins_disagree": 5,
+      "test": 145,
+      "train": 1826,
+      "val": 281
+    },
+    "atlas": {
+      "test": 176,
+      "train": 1590,
+      "val": 172
+    },
+    "bindingdb": {
+      "dropped:excluded_ligand": 3091,
+      "dropped:ligand_disagrees": 1846,
+      "test": 6844,
+      "train": 57509,
+      "val": 7576
+    },
+    "cafa5": {
+      "test": 846,
+      "train": 6891,
+      "val": 893
+    },
+    "dms": {
+      "test": 183308,
+      "train": 2099527,
+      "val": 182932
+    },
+    "fireprot": {
+      "test": 650,
+      "train": 2571,
+      "val": 183
+    },
+    "lp-pdbbind": {
+      "dropped:excluded_ligand": 4306,
+      "dropped:ligand_disagrees": 219,
+      "test": 1402,
+      "train": 12348,
+      "val": 1168
+    },
+    "megascale": {
+      "test": 38050,
+      "train": 208302,
+      "val": 24879
+    },
+    "passerrank": {
+      "test": 221,
+      "train": 1436,
+      "val": 228
+    },
+    "ppi": {
+      "dropped:proteins_disagree": 150040,
+      "test": 11452,
+      "train": 101952,
+      "val": 11056
+    },
+    "shs27k": {
+      "dropped:proteins_disagree": 4300,
+      "test": 289,
+      "train": 2763,
+      "val": 272
+    }
+  },
+  "searches": {
+    "ligands": {
+      "bytes": 96686199,
+      "sha256": "e1764f7c81ce7b8f",
+      "table": "pooled_ligands_tan50_ge30_2tasks_4c736cb3.pkl"
+    },
+    "sequence_half": {
+      "bytes": 162551935,
+      "sha256": "bcfaa5e47eb3cb47",
+      "table": "pooled_seq_id30_cov80_ge0_11tasks_c16223b6.pkl"
+    },
+    "structure": {
+      "bytes": 469969942,
+      "sha256": "dd54205d227f9084",
+      "table": "foldseek_22245_dd309fc938fad0d1_ge40.tsv.gz"
+    }
+  },
+  "seed": 0,
+  "solve": {
+    "epsilon_asked": 0.05,
+    "loosened_epsilon": [],
+    "per_dataset": {
+      "allobench": {
+        "biggest_cluster": 1,
+        "clusters": 425,
+        "crossing_edges": 120,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 425,
+        "reduced_to": 1000,
+        "similar_pairs": 343,
+        "status": "optimal",
+        "stratified": false
+      },
+      "atlas": {
+        "biggest_cluster": 345,
+        "clusters": 1000,
+        "crossing_edges": 193,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 1693,
+        "reduced_to": 1000,
+        "similar_pairs": 63,
+        "status": "optimal",
+        "stratified": false
+      },
+      "bindingdb": {
+        "biggest_cluster": 392,
+        "clusters": 1000,
+        "crossing_edges": 0,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 2156,
+        "reduced_to": 1000,
+        "similar_pairs": 1571,
+        "status": "optimal",
+        "stratified": false
+      },
+      "cafa5": {
+        "biggest_cluster": 2883,
+        "clusters": 1000,
+        "crossing_edges": 0,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 8528,
+        "reduced_to": 1000,
+        "similar_pairs": 304,
+        "status": "optimal",
+        "stratified": false
+      },
+      "dms": {
+        "biggest_cluster": 1,
+        "clusters": 187,
+        "crossing_edges": 0,
+        "epsilon": 0.05,
+        "label_classes_banded": 5,
+        "mode": "C1",
+        "nodes": 187,
+        "reduced_to": 1000,
+        "similar_pairs": 46,
+        "status": "optimal",
+        "stratified": false
+      },
+      "fireprot": {
+        "biggest_cluster": 1,
+        "clusters": 100,
+        "crossing_edges": 5,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 100,
+        "reduced_to": 1000,
+        "similar_pairs": 22,
+        "status": "optimal",
+        "stratified": false
+      },
+      "lp-pdbbind": {
+        "biggest_cluster": 7338,
+        "clusters": 1000,
+        "crossing_edges": 36789,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 12718,
+        "reduced_to": 1000,
+        "similar_pairs": 905,
+        "status": "optimal",
+        "stratified": false
+      },
+      "megascale": {
+        "biggest_cluster": 1,
+        "clusters": 298,
+        "crossing_edges": 0,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 298,
+        "reduced_to": 1000,
+        "similar_pairs": 935,
+        "status": "optimal",
+        "stratified": false
+      },
+      "passerrank": {
+        "biggest_cluster": 1,
+        "clusters": 331,
+        "crossing_edges": 69,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 331,
+        "reduced_to": 1000,
+        "similar_pairs": 252,
+        "status": "optimal",
+        "stratified": false
+      },
+      "ppi": {
+        "biggest_cluster": 6033,
+        "clusters": 1000,
+        "crossing_edges": 39,
+        "epsilon": 0.05,
+        "label_classes_banded": 0,
+        "mode": "C1",
+        "nodes": 11019,
+        "reduced_to": 1000,
+        "similar_pairs": 259,
+        "status": "optimal",
+        "stratified": false
+      },
+      "shs27k": {
+        "biggest_cluster": 475,
+        "clusters": 1000,
+        "crossing_edges": 7,
+        "epsilon": 0.05,
+        "label_classes_banded": 7,
+        "mode": "C1",
+        "nodes": 1690,
+        "reduced_to": 1000,
+        "similar_pairs": 158,
+        "status": "optimal",
+        "stratified": true
+      }
+    },
+    "solved_per_dataset": true,
+    "status": "minimised"
+  },
+  "solve_tolerance": 0.035,
+  "strata_tolerance": 0.15,
+  "strategy": "datasail",
+  "stratified": true,
+  "structure_coverage": {
+    "allobench": 1.0,
+    "atlas": 1.0,
+    "fireprot": 1.0,
+    "lp-pdbbind": 1.0,
+    "passerrank": 1.0
+  },
+  "structure_views": [
+    "allobench",
+    "atlas",
+    "fireprot",
+    "lp-pdbbind",
+    "passerrank"
+  ],
+  "tag": "id30_cov80_ge0_tm70_11tasks_3500e7c0",
+  "thresholds": {
+    "cov_modes": "1 union 2",
+    "coverage": 0.8,
+    "fingerprint": "ecfp4 (morgan r=2, 2048 bits, no stereochemistry)",
+    "min_id": 0.3,
+    "sensitivity": "7.5",
+    "split_tm": 0.7,
+    "tanimoto": 0.5
+  },
+  "tolerance": 0.05
+}

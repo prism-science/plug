@@ -1,0 +1,33 @@
+[project]
+name = "plug"
+version = "0.1.0"
+description = "leakage-free train/val/test splits of functional protein datasets, by balanced vertex minimum k-cut"
+readme = "README.md"
+# python-mip ships CBC wheels for 3.9-3.11; 3.11 is the floor and the ceiling until it
+# builds for newer. the split is reproducible across platforms, not across solvers, so
+# the interpreter and the solver are both pinned deliberately
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "pandas>=2.0",
+    # some of the datasets ship parquet, which pandas needs an engine to read
+    "pyarrow>=14.0",
+    "numpy>=1.24",
+    "networkx>=3.0",
+    # the MIP modelling layer. mip bundles CBC, which is what Lo-Hi solved with, but
+    # that build segfaults on macos arm64, so highspy is a dependency rather than an
+    # extra -- the default solver has to be one that runs on the reader's own machine
+    "mip>=1.15.0",
+    "highspy>=1.7",
+    # DataSAIL's model is written in cvxpy and solved with SCIP, as it is upstream
+    "cvxpy>=1.4",
+    "pyscipopt>=4.3",
+    "rdkit>=2023.9",
+    "scikit-learn>=1.9.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["plug"]

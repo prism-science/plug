@@ -1,0 +1,83 @@
+from typing import Optional, Union
+from pathlib import Path
+
+import cvxpy
+import numpy as np
+
+from .datasail_support import solve, compute_limits, stratification_constraints
+
+
+def solve_c1(
+        clusters: list[Union[str, int]],
+        weights: list[float],
+        s_matrix: Optional[np.ndarray],
+        similarities: Optional[np.ndarray],
+        distances: Optional[np.ndarray],
+        delta: float,
+        epsilon: float,
+        splits: list[float],
+        names: list[str],
+        max_sec: int,
+        solver: str,
+        log_file: Path,
+        pairs: Optional[list] = None,
+        floors: Optional[list] = None,
+) -> Optional[dict[str, str]]:
+    """
+    Solve cluster-based cold splitting using disciplined quasi-convex programming and binary quadratic programming.
+
+    Args:
+        clusters: List of cluster names to split
+        weights: Weights of the clusters in the order of their names in e_clusters
+        s_matrix: Stratification for the clusters
+        similarities: Pairwise similarity matrix of clusters in the order of their names
+        distances: Pairwise distance matrix of clusters in the order of their names.
+        delta: Additive bound for stratification imbalance
+        epsilon: Additive bound for exceeding the requested split size
+        splits: List of split sizes
+        names: List of names of the splits in the order of the splits argument
+        max_sec: Maximal number of seconds to take when optimizing the problem (not for finding an initial solution)
+        solver: Solving algorithm to use to solve the formulated program
+        log_file: File to store the detailed log from the solver to
+
+    Returns:
+        Mapping from clusters to splits optimizing the objective function
+    """
+    min_lim = compute_limits(epsilon, sum(weights), splits)
+    print(min_lim)
+
+    x = cvxpy.Variable((len(splits), len(clusters)), boolean=True)  # 19
+
+    constraints = [cvxpy.sum(x, axis=0) == np.ones((len(clusters)))]  # 16
+
+    for s, lim in enumerate(min_lim):
+        constraints.append(lim <= cvxpy.sum(cvxpy.multiply(x[s], weights)))  # 17
+
+    # (17) again over a second weight vector: one floor per split, in that vector's units
+    for other_weights, other_lims in (floors or []):
+        for s, lim in enumerate(other_lims):
+            if lim > 0:
+                constraints.append(lim <= cvxpy.sum(cvxpy.multiply(x[s], other_weights)))
+
+    if s_matrix is not None:
+        constraints.append(stratification_constraints(s_matrix, splits, delta, x))
+
+    intra_weights = similarities if similarities is not None else np.max(distances) - distances
+
+    # Because of different weights tmp != len(clusters) * (len(clusters) - 1) / 2
+    if pairs is None:
+        pairs = [(e1, e2) for e1 in range(len(clusters)) for e2 in range(e1 + 1, len(clusters))]
+    first = [e1 for e1, _ in pairs]
+    second = [e2 for _, e2 in pairs]
+    cost = np.array([weights[e1] * weights[e2] * intra_weights[e1, e2]
+                     for e1, e2 in pairs])
+    # max over the splits of x[s, e1] - x[s, e2] is 1 when the pair is separated and 0
+    # when it is not, the same term by term as the loop this replaces. with no pair
+    # carrying a similarity there is nothing to separate and the loss is the constant
+    # zero, which is what a transitively closed graph gives  # 15
+    loss = (cost @ cvxpy.max(x[:, first] - x[:, second], axis=0)) if pairs else 0
+    problem = solve(loss, constraints, max_sec, solver, log_file)
+
+    return None if problem is None else {
+        e: names[s] for s in range(len(splits)) for i, e in enumerate(clusters) if x[s, i].value > 0.1
+    }
