@@ -57,6 +57,46 @@ The first build runs mmseqs over the pool (an hour or more) and foldseek over 22
 day), then caches both in `work/`. The sequence and ligand caches are named for the thresholds
 and the dataset list, not their contents, so delete `work/` after downloading newer data.
 
+## Adding a dataset
+
+A dataset is one file in `plug/benchmarks/` that says how to read its rows:
+
+```python
+# plug/benchmarks/mydata.py
+import csv
+from . import Benchmark
+from .. import config as c
+
+class Mydata(Benchmark):
+    name = "mydata"
+    key = "uniprot"           # the field naming the protein; a tuple of two for a pair
+    seq = "sequence"          # the field holding its sequence
+    views = ()                # add "structure" and/or "ligand" if it can leak through them
+    label = "fitness"         # what it is scored on
+
+    @classmethod
+    def rows(cls):            # one dict per datapoint, in a fixed order
+        with open(c.data / "mydata" / "mydata.csv", newline="") as f:
+            yield from csv.DictReader(f)
+```
+
+Import it in `plug/benchmarks/__init__.py` and add its name to `DATASETS`, the tuple of datasets
+every split and screen runs over. With the `ligand` view, set `ligand` to the field holding
+each row's smiles (default `"smiles"`). With `structure`, give each row a `pdb` field and
+return `rcsb.structures(cls)` from `structures()`, as `allobench.py` does; every protein needs
+a structure or the build stops. Add a `data/download_mydata.sh` so others can fetch it.
+
+Then rerun whichever you need, exactly as above:
+
+```bash
+uv run python3 -m plug.split --lohi                     # or --datasail
+uv run python3 -m plug.sample_unlabeled_trainset --seq  # or --struct, --both
+```
+
+Adding a dataset changes the dataset list, so the build gets a new tag in `results/` and the
+searches run again over the larger pool. lohi is solved over that pool, so every dataset's
+lohi split can change, not only the new one's; datasail solves each dataset on its own.
+
 ## Main results
 
 - **Leakage inflates scores.** Against random controls dealt to the same sizes and matched on

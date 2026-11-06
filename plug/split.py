@@ -32,7 +32,7 @@ import networkx as nx
 
 from . import config as c
 from . import graph as G
-from .benchmarks import ELEVEN, REGISTRY
+from .benchmarks import DATASETS, REGISTRY
 from .external import datasail_cluster_1d
 from .external import min_vertex_k_cut as lohi
 
@@ -708,7 +708,7 @@ STRATEGIES = ("datasail", "lohi")
 # building, stamping and writing one split
 # -----------------------------------------------------------------------------
 
-TASKS = ELEVEN
+TASKS = DATASETS
 FRAC = (0.8, 0.1, 0.1)          # train / val / test, of each dataset's RETAINED rows
 TOLERANCE = 0.05                # how far from FRAC a dataset may land. the RULE
 # and what the solve aims at, which is tighter. the band is enforced on the weight

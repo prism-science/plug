@@ -102,6 +102,6 @@ from .bindingdb import Bindingdb
 from .atlas import Atlas
 
 REGISTRY = {b.name: b for b in Benchmark.__subclasses__()}
-# the eleven, in a fixed order so the tag over them is stable
-ELEVEN = ("allobench", "atlas", "bindingdb", "cafa5", "dms", "fireprot", "lp-pdbbind",
-          "megascale", "passerrank", "ppi", "shs27k")
+# every dataset a split or screen runs over, in a fixed order so the tag over them is stable
+DATASETS = ("allobench", "atlas", "bindingdb", "cafa5", "dms", "fireprot", "lp-pdbbind",
+            "megascale", "passerrank", "ppi", "shs27k")

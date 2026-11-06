@@ -28,7 +28,7 @@ from pathlib import Path
 
 from . import config as c
 from . import graph as G
-from .benchmarks import ELEVEN, REGISTRY
+from .benchmarks import DATASETS, REGISTRY
 
 RESERVOIRS = ("seq", "struct", "both")
 QUOTA = 1_000_000           # how many clean sequences to end up with
@@ -210,7 +210,7 @@ def code(name):
     '''a uniref cluster name -> the uniprot code it stands for'''
     return name.split("_", 1)[1] if name.startswith("UniRef90_") else name
 
-def sample(reservoir, quota=QUOTA, tasks=ELEVEN, say=print):
+def sample(reservoir, quota=QUOTA, tasks=DATASETS, say=print):
     '''sample until there are `quota` sequences that match no benchmark protein'''
     classes = [REGISTRY[name] for name in tasks]
     by_seq, by_struct = reservoir in ("seq", "both"), reservoir in ("struct", "both")
