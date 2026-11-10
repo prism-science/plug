@@ -1,12 +1,8 @@
 # dataset licenses
 
-plug's git repo ships **download scripts, not data** — `data/*` is gitignored except the
-`download_*.sh` scripts. so publishing this repo redistributes code and split labels (row indices),
-not the datasets, which is unrestricted.
+plug's git repo ships **download scripts, not data** — `data/*` is gitignored except the `download_*.sh` scripts. so publishing this repo redistributes code and split labels (row indices), not the datasets, which is unrestricted.
 
-these licenses matter the moment you redistribute the *fetched data itself* — a cached csv/fasta under
-`data/`, the `data/formatted/*.fasta` bundle, or a released benchmark tarball. each source keeps its own
-terms; the full texts are in this directory.
+these licenses matter the moment you redistribute the *fetched data itself* — a cached csv/fasta under `data/`, the `data/formatted/*.fasta` bundle, or a released benchmark tarball. each source keeps its own terms; the full texts are in this directory.
 
 ## plug's code
 
@@ -37,29 +33,17 @@ MIT: [PLUG-MIT-LICENSE](PLUG-MIT-LICENSE).
 | **lp-pdbbind** | `download_lp_pdbbind.sh` | github THGLab/LP-PDBBind | **UC Regents — research / non-profit only** | [LP-PDBBind-LICENSE.txt](LP-PDBBind-LICENSE.txt) | no |
 | **atlas** | `download_atlas.sh` | dsimb.inserm.fr | **CC BY-NC 4.0** | [CC-BY-NC-4.0.txt](CC-BY-NC-4.0.txt) | no |
 
-## watch-outs
 
 **two sources are non-commercial** — everything else is freely redistributable with attribution:
 
 - **atlas** — CC BY-NC 4.0. commercial use needs the authors' permission.
-- **lp-pdbbind** — UC Regents license grants use/copy/modify/**distribute** for *educational, research, and
-  not-for-profit* purposes only. the affinity values ultimately come from **PDBbind**, whose own license
-  forbids redistribution; lp-pdbbind is the republication vehicle, so stay within its non-commercial bound
-  and cite it. this is the softest spot in the set.
+- **lp-pdbbind** — UC Regents license grants use/copy/modify/**distribute** for *educational, research, and not-for-profit* purposes only. the affinity values ultimately come from **PDBbind**, whose own license forbids redistribution; lp-pdbbind is the republication vehicle, so stay within its non-commercial bound and cite it. this is the softest spot in the set.
 
-if you ever bundle *all* the formatted test fastas into one release, these two NC terms cover the whole
-bundle. keeping them download-on-demand (as the scripts already do) avoids that.
+**the generated trainset is clean.** it derives only from uniref90 (CC BY 4.0) + pdb (CC0), so it's freely redistributable — commercial included — with a UniProt attribution line.
 
-**the generated trainset is clean.** it derives only from uniref90 (CC BY 4.0) + pdb (CC0), so it's freely
-redistributable — commercial included — with a UniProt attribution line.
-
-**minor:**
-- **passerrank** — the github repo has no LICENSE file, but the script only pulls the ASD table (ASD v3+ is
-  CC BY) and fetches sequences straight from UniProt (CC BY). the *content* is CC BY on both sides.
-- **shs27k** — redistributed via the GNN-PPI repo, but the *content* is a subset of STRING (interactions +
-  sequences), which is CC BY 4.0. cite GNN-PPI and PIPR for the subset, STRING for the underlying data.
-- **bindingdb** — the *Articles* subset used here is bindingdb's own literature curation (CC BY 4.0). the
-  more restrictive ChEMBL terms apply only to the separate ChEMBL download, which this repo doesn't touch.
+- **passerrank** — the github repo has no LICENSE file, but the script only pulls the ASD table (ASD v3+ is CC BY) and fetches sequences straight from UniProt (CC BY). the *content* is CC BY on both sides.
+- **shs27k** — redistributed via the GNN-PPI repo, but the *content* is a subset of STRING (interactions + sequences), which is CC BY 4.0. cite GNN-PPI and PIPR for the subset, STRING for the underlying data.
+- **bindingdb** — the *Articles* subset used here is bindingdb's own literature curation (CC BY 4.0). the more restrictive ChEMBL terms apply only to the separate ChEMBL download, which this repo doesn't touch.
 
 ## cite the sources
 
