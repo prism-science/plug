@@ -1,4 +1,5 @@
-# PLUG
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24120499.svg)](https://doi.org/10.5281/zenodo.24120499)
+# PLUG 
 
 **Protein Leakage-free evaluation for Unbiased Generators of function.**
 
